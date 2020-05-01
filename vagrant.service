@@ -1,0 +1,20 @@
+[Unit]
+SourcePath=/usr/lib/vagrant/vagrant_autoup.sh
+Description=
+Before=runlevel2.target runlevel3.target runlevel4.target runlevel5.target shutdown.target 
+After=vboxdrv.service 
+Conflicts=shutdown.target 
+
+[Service]
+Type=forking
+Restart=no
+TimeoutSec=5min
+IgnoreSIGPIPE=no
+KillMode=process
+GuessMainPID=no
+RemainAfterExit=yes
+ExecStart=/usr/lib/vagrant/vagrant_autoup.sh start
+ExecStop=/usr/lib/vagrant/vagrant_autoup.sh stop
+
+[Install]
+WantedBy=multi-user.target
