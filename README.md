@@ -38,3 +38,23 @@ Fri May  1 13:35:55 UTC 2020
 /home/[USER]/vagrant-folders/box-name
 ==> default: Saving VM state and suspending execution...
 ```
+
+## Sample Vagrantfile
+```sh
+config.vm.box = "ubuntu/xenial64"
+
+# default: 80 (guest) => 8080 (host) (adapter 1)
+# default: 22 (guest) => 2222 (host) (adapter 1)
+config.vm.network "forwarded_port", guest: 80, host: 8080
+
+# Shared folder
+config.vm.synced_folder "~/[CERTAIN_DIRECTORY]", "/home/vagrant/[CERTAIN_DIRECTORY]"
+
+vb.memory = "2048"
+
+# vagrant user configuration
+git clone --depth=1 https://github.com/amix/vimrc.git ~/.vim_runtime
+sed -i '193i\\set nu\\' ~/.vim_runtime/vimrcs/basic.vim
+sh ~/.vim_runtime/install_awesome_vimrc.sh
+sed -i 's/$PATH/\\/vagrant\\/bin:$PATH/g' ~/.profile
+```
