@@ -66,6 +66,11 @@ Vagrant.configure("2") do |config|
   config.vm.provision "shell", inline: <<-SHELL
     apt-get update
     apt-get install -y apache2
+
+    # Python 3.8 (apt-cache search python3.8)
+    add-apt-repository ppa:deadsnakes/ppa
+    apt-get update
+    apt-get install -y python3.8 python3.8-venv
   SHELL
 
   config.vm.provision "shell", privileged: false, inline: <<-SHELL
@@ -75,5 +80,10 @@ Vagrant.configure("2") do |config|
     
     # add /vagrant/bin to $PATH
     sed -i 's/$PATH/\\/vagrant\\/bin:$PATH/g' ~/.profile
+
+    # Python 3.8 venv
+    # venv on  : source .python3.8.venv/bin/activate
+    # venv off : deactive
+    python3.8 -m venv .python3.8.venv
   SHELL
 end
