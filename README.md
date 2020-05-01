@@ -1,34 +1,40 @@
 # vagrant-autoup
-Vagrant will suspend/resume(up) when host computer stop/start
 This script / systemd service will suspend / resume the all vagrant boxes in your user-id when system shutdown / startup
 
-# Prerequisite
+## Prerequisite
 * Ubuntu 16.04 or higher
 * systemd dependency
 
-# Positioning the shell script
+## Positioning the shell script
+```sh
 sudo mkdir -p /usr/lib/vagrant
 sudo cp vagrant_autoup.sh /usr/lib/vagrant
 sudo chmod +x /usr/lib/vagrant/vagrant_autoup.sh
+```
 
-# Configuration systemd
+## Configuration systemd
+```sh
 sudo cp vagrant.service /etc/systemd/system
 sudo systemctl deamon-reload
 sudo systemctl enable vagrant.service
+```
 
-# Check the service installation
+## Check the service installation
+```sh
 ls /etc/systemd/system/multi-user.target.wants/vagrant.service
+```
 
-# Logging
-tail -f -n100 /home/[USER]/vagrant_start.log
-<code>
+## Logging
+```sh
+$ tail -f -n100 /home/[USER]/vagrant_start.log
 Fri May  1 13:36:19 UTC 2020
 /home/[USER]/vagrant-folders/box-name
 Bringing machine 'default' up with 'virtualbox' provider...
-</code>
-tail -f -n100 /home/[USER]/vagrant_stop.log
-<code>
+```
+
+```sh
+$ tail -f -n100 /home/[USER]/vagrant_stop.log
 Fri May  1 13:35:55 UTC 2020
 /home/[USER]/vagrant-folders/box-name
 ==> default: Saving VM state and suspending execution...
-</code>
+```
